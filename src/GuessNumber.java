@@ -144,28 +144,6 @@ public class GuessNumber extends JFrame implements ActionListener {
         panelButtons.setBackground(color);
     }
 
-    void resume() {
-        // Restore the time we're counting down from and restart the timer.
-        lastUpdate = System.currentTimeMillis();
-        timer.start(); // Start the timer
-    }
-
-//    void pause() {
-//        // Subtract elapsed time from the remaining time and stop timing
-//        long now = System.currentTimeMillis();
-//        remaining -= (now - lastUpdate);
-//        timer.stop(); // Stop the timer
-//    }
-
-//    void updateDisplay() {
-//        timer.start();
-//        panelBottom.add(new JLabel("Countdown: " + secondsLeft), BorderLayout.SOUTH);
-//        secondsLeft--;
-//        if (secondsLeft == 0) {
-//            timer.stop();
-//        }
-//    }
-
     public static void main(String args[]) {
 
         SwingUtilities.invokeLater(new Runnable() {
