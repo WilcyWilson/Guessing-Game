@@ -5,9 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class GuessNumber extends JFrame implements ActionListener {
+
+    private static int secondsLeft = 5;
     Timer timer;
     long lastUpdate;
-    long remaining;
     private static final long serialVersionUID = 1L;
     private JPanel panel = new JPanel(new BorderLayout());
     private JPanel panelButtons = new JPanel(new FlowLayout());
@@ -17,20 +18,30 @@ public class GuessNumber extends JFrame implements ActionListener {
     private JButton resetButton = new JButton("Reset");
     private JButton quitButton = new JButton("Quit");
     private JLabel comment = new JLabel("Guess the number please");
+    private JLabel secondsLabel = new JLabel("Countdown: " + secondsLeft);
     private static int guess = 3;
     private JLabel numberOfTries = new JLabel("Number of tries left: " + guess);
     private int randomNumber;
 
     public GuessNumber() {
         super("Guess Number");
-        timer = new Timer(1000, this);
-        timer.setInitialDelay(0);
-        remaining = 600000;
+        add(buildWindow());
         randomNumber = new Random().nextInt(1000) + 1;
+        timer = new Timer(1000, e -> {
+            secondsLeft--;
+            secondsLabel.setText("Countdown: " + secondsLeft);
+            System.out.println("Seconds left: " + secondsLeft);
+            if (secondsLeft == 0) {
+                setBackgroundColor(Color.red);
+                JOptionPane.showMessageDialog(null, "Sorry time's up", "You Lose !!!!",
+                        JOptionPane.INFORMATION_MESSAGE);
+                ((Timer) e.getSource()).stop();
+            }
+        });
+        timer.start();
         tryButton.addActionListener(this);
         quitButton.addActionListener(this);
         resetButton.addActionListener(this);
-        add(buildWindow());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(400, 300);
     }
@@ -42,7 +53,7 @@ public class GuessNumber extends JFrame implements ActionListener {
         panelBottom.add(panelButtons, BorderLayout.NORTH);
         panelBottom.add(numberOfTries, BorderLayout.EAST);
         panelBottom.add(comment, BorderLayout.WEST);
-        updateDisplay();
+        panelBottom.add(secondsLabel, BorderLayout.SOUTH);
         panel.add(new JLabel("Guess a number from 1 to 1000"), BorderLayout.NORTH);
         panel.add(fieldBox, BorderLayout.CENTER);
         panel.add(panelBottom, BorderLayout.SOUTH);
@@ -65,6 +76,8 @@ public class GuessNumber extends JFrame implements ActionListener {
         setBackgroundColor(UIManager.getColor("Panel.background"));
         numberOfTries.setText("Number of tries left: " + guess);
         comment.setText("Guess the number please");
+        secondsLeft = 5;
+        timer.start();
     }
 
     private void resetRandomNumber() {
@@ -137,24 +150,21 @@ public class GuessNumber extends JFrame implements ActionListener {
         timer.start(); // Start the timer
     }
 
-    void pause() {
-        // Subtract elapsed time from the remaining time and stop timing
-        long now = System.currentTimeMillis();
-        remaining -= (now - lastUpdate);
-        timer.stop(); // Stop the timer
-    }
+//    void pause() {
+//        // Subtract elapsed time from the remaining time and stop timing
+//        long now = System.currentTimeMillis();
+//        remaining -= (now - lastUpdate);
+//        timer.stop(); // Stop the timer
+//    }
 
-    void updateDisplay() {
-
-        remaining = 60;
-        if (remaining < 0) remaining = 0;
-        panelBottom.add(new JLabel("Countdown: " + remaining), BorderLayout.SOUTH);
-        remaining = -1;
-        if (remaining == 0) {
-            // Stop updating now.
-            timer.stop();
-        }
-    }
+//    void updateDisplay() {
+//        timer.start();
+//        panelBottom.add(new JLabel("Countdown: " + secondsLeft), BorderLayout.SOUTH);
+//        secondsLeft--;
+//        if (secondsLeft == 0) {
+//            timer.stop();
+//        }
+//    }
 
     public static void main(String args[]) {
 
