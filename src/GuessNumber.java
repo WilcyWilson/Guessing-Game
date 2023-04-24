@@ -8,19 +8,17 @@ public class GuessNumber extends JFrame implements ActionListener {
 
     private static int secondsLeft = 5;
     Timer timer;
-    long lastUpdate;
-    private static final long serialVersionUID = 1L;
-    private JPanel panel = new JPanel(new BorderLayout());
-    private JPanel panelButtons = new JPanel(new FlowLayout());
-    private JPanel panelBottom = new JPanel(new BorderLayout());
-    private JTextField fieldBox = new JTextField(10);
-    private JButton tryButton = new JButton("Try");
-    private JButton resetButton = new JButton("Reset");
-    private JButton quitButton = new JButton("Quit");
-    private JLabel comment = new JLabel("Guess the number please");
-    private JLabel secondsLabel = new JLabel("Countdown: " + secondsLeft);
+    private final JPanel panel = new JPanel(new BorderLayout());
+    private final JPanel panelButtons = new JPanel(new FlowLayout());
+    private final JPanel panelBottom = new JPanel(new BorderLayout());
+    private final JTextField fieldBox = new JTextField(10);
+    private final JButton tryButton = new JButton("Try");
+    private final JButton resetButton = new JButton("Reset");
+    private final JButton quitButton = new JButton("Quit");
+    private final JLabel comment = new JLabel("Guess the number please");
+    private final JLabel secondsLabel = new JLabel("Countdown: " + secondsLeft);
     private static int guess = 3;
-    private JLabel numberOfTries = new JLabel("Number of tries left: " + guess);
+    private final JLabel numberOfTries = new JLabel("Number of tries left: " + guess);
     private int randomNumber;
 
     public GuessNumber() {
@@ -85,7 +83,7 @@ public class GuessNumber extends JFrame implements ActionListener {
     }
 
     private void compareResult() {
-        int userInput = 0;
+        int userInput;
         int diff;
         int Difference = 0;
         if (guess <= 0) {
@@ -144,13 +142,11 @@ public class GuessNumber extends JFrame implements ActionListener {
         panelButtons.setBackground(color);
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                GuessNumber g = new GuessNumber();
-                g.setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            GuessNumber g = new GuessNumber();
+            g.setVisible(true);
         });
     }
 
