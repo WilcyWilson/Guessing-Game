@@ -3,3 +3,7 @@
 ### Game Demo    
 
 ![Demo](test.gif)
+
+### Timer Demo
+
+![Timer Demo](test2.gif)
