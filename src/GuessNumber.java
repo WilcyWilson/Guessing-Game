@@ -6,7 +6,11 @@ import java.util.Random;
 
 public class GuessNumber extends JFrame implements ActionListener {
 
-    private static int secondsLeft = 5;
+    private static int secondsLeft = 60;
+
+    private static int guess = 5;
+
+    private int setRandomNumber = 100;
     Timer timer;
     private final JPanel panel = new JPanel(new BorderLayout());
     private final JPanel panelButtons = new JPanel(new FlowLayout());
@@ -17,18 +21,16 @@ public class GuessNumber extends JFrame implements ActionListener {
     private final JButton quitButton = new JButton("Quit");
     private final JLabel comment = new JLabel("Guess the number please");
     private final JLabel secondsLabel = new JLabel("Countdown: " + secondsLeft);
-    private static int guess = 3;
     private final JLabel numberOfTries = new JLabel("Number of tries left: " + guess);
     private int randomNumber;
 
     public GuessNumber() {
         super("Guess Number");
         add(buildWindow());
-        randomNumber = new Random().nextInt(1000) + 1;
+        randomNumber = new Random().nextInt(setRandomNumber) + 1;
         timer = new Timer(1000, e -> {
             secondsLeft--;
             secondsLabel.setText("Countdown: " + secondsLeft);
-            System.out.println("Seconds left: " + secondsLeft);
             if (secondsLeft == 0) {
                 setBackgroundColor(Color.red);
                 JOptionPane.showMessageDialog(null, "Sorry time's up", "You Lose !!!!",
@@ -52,7 +54,7 @@ public class GuessNumber extends JFrame implements ActionListener {
         panelBottom.add(numberOfTries, BorderLayout.EAST);
         panelBottom.add(comment, BorderLayout.WEST);
         panelBottom.add(secondsLabel, BorderLayout.SOUTH);
-        panel.add(new JLabel("Guess a number from 1 to 1000"), BorderLayout.NORTH);
+        panel.add(new JLabel("Guess a number from 1 to " + setRandomNumber), BorderLayout.NORTH);
         panel.add(fieldBox, BorderLayout.CENTER);
         panel.add(panelBottom, BorderLayout.SOUTH);
         return panel;
@@ -70,16 +72,24 @@ public class GuessNumber extends JFrame implements ActionListener {
     }
 
     private void restart() {
-        guess = 3;
+        setGuess();
         setBackgroundColor(UIManager.getColor("Panel.background"));
         numberOfTries.setText("Number of tries left: " + guess);
         comment.setText("Guess the number please");
-        secondsLeft = 5;
+        setSecondsLeft();
         timer.start();
     }
 
+    private void setSecondsLeft(){
+        secondsLeft = 60;
+    }
+
+    private void setGuess(){
+        guess = 5;
+    }
+
     private void resetRandomNumber() {
-        randomNumber = new Random().nextInt(1000) + 1;
+        randomNumber = new Random().nextInt(setRandomNumber) + 1;
     }
 
     private void compareResult() {
@@ -122,14 +132,15 @@ public class GuessNumber extends JFrame implements ActionListener {
             diff = userInput - randomNumber;
             Difference = Math.abs(diff);
         }
-        if (Difference <= 10) {
-            comment.setText("Difference is less than or equal to 10. You are very close, keep trying");
+        if (Difference <= 5) {
+            comment.setText("Difference is less than or equal to 5. You are very close, keep trying");
         }
     }
 
     private void checkGuess(int guess) {
         if (guess <= 0) {
             comment.setText("Click Reset Button to reset the game");
+            timer.stop();
             setBackgroundColor(Color.red);
             JOptionPane.showMessageDialog(null, "Sorry you lost the game", "You Lose !!!!",
                     JOptionPane.INFORMATION_MESSAGE);
