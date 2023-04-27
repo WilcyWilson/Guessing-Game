@@ -6,9 +6,9 @@ import java.util.Random;
 
 public class GuessNumber extends JFrame implements ActionListener {
 
-    private static int secondsLeft = 60;
+    private static int secondsLeft;
 
-    private static int guess = 5;
+    private static int guess;
 
     private final int setRandomNumber = 100;
     Timer timer;
@@ -20,8 +20,8 @@ public class GuessNumber extends JFrame implements ActionListener {
     private final JButton resetButton = new JButton("Reset");
     private final JButton quitButton = new JButton("Quit");
     private final JLabel comment = new JLabel("Guess the number please");
-    private final JLabel secondsLabel = new JLabel("Countdown: " + secondsLeft);
-    private final JLabel numberOfTries = new JLabel("Number of tries left: " + guess);
+    private final JLabel secondsLabel = new JLabel("Countdown: " + setSecondsLeft());
+    private final JLabel numberOfTries = new JLabel("Number of tries left: " + setGuess());
     private int randomNumber;
 
     public GuessNumber() {
@@ -33,6 +33,9 @@ public class GuessNumber extends JFrame implements ActionListener {
             secondsLabel.setText("Countdown: " + secondsLeft);
             if (secondsLeft == 0) {
                 setBackgroundColor(Color.red);
+                comment.setText("Click Reset Button to reset the game");
+                resetGuess();
+                numberOfTries.setText("Number of tries left: " + guess);
                 JOptionPane.showMessageDialog(null, "Sorry time's up", "You Lose !!!!",
                         JOptionPane.INFORMATION_MESSAGE);
                 ((Timer) e.getSource()).stop();
@@ -80,12 +83,19 @@ public class GuessNumber extends JFrame implements ActionListener {
         timer.start();
     }
 
-    private void setSecondsLeft(){
+    private int setSecondsLeft(){
         secondsLeft = 60;
+        return secondsLeft;
     }
 
-    private void setGuess(){
+    private int setGuess(){
         guess = 5;
+        return guess;
+    }
+
+    private int resetGuess(){
+        guess = 0;
+        return guess;
     }
 
     private void resetRandomNumber() {
@@ -109,6 +119,7 @@ public class GuessNumber extends JFrame implements ActionListener {
             return;
         }
         if (userInput == randomNumber) {
+            timer.stop();
             setBackgroundColor(Color.green);
             JOptionPane.showMessageDialog(null, "Congratulations you got the correct answer",
                     "Result", JOptionPane.INFORMATION_MESSAGE);
@@ -158,6 +169,7 @@ public class GuessNumber extends JFrame implements ActionListener {
         SwingUtilities.invokeLater(() -> {
             GuessNumber g = new GuessNumber();
             g.setSize(800,300);
+            g.setLocation(500,300);
             g.setVisible(true);
         });
     }
