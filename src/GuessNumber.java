@@ -10,7 +10,7 @@ public class GuessNumber extends JFrame implements ActionListener {
 
     private static int guess = 5;
 
-    private int setRandomNumber = 100;
+    private final int setRandomNumber = 100;
     Timer timer;
     private final JPanel panel = new JPanel(new BorderLayout());
     private final JPanel panelButtons = new JPanel(new FlowLayout());
