@@ -132,7 +132,7 @@ public class GuessNumber extends JFrame implements ActionListener {
             diff = userInput - randomNumber;
             Difference = Math.abs(diff);
         }
-        if (Difference <= 5) {
+        if (Difference <= 5 && guess > 0) {
             comment.setText("Difference is less than or equal to 5. You are very close, keep trying");
         }
     }
@@ -157,6 +157,7 @@ public class GuessNumber extends JFrame implements ActionListener {
 
         SwingUtilities.invokeLater(() -> {
             GuessNumber g = new GuessNumber();
+            g.setSize(800,300);
             g.setVisible(true);
         });
     }
