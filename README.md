@@ -7,3 +7,7 @@
 ### Timer Demo
 
 ![Timer Demo](test2.gif)
+
+### Win Screen
+
+![Timer Demo](win_screen.png)
