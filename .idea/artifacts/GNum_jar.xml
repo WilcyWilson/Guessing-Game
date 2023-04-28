@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GNum:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/GNum_jar</output-path>
+    <root id="archive" name="GNum.jar">
+      <element id="module-output" name="GNum" />
+    </root>
+  </artifact>
+</component>
