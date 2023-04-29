@@ -76,6 +76,7 @@ public class GuessNumber extends JFrame implements ActionListener {
 
     private void restart() {
         setGuess();
+        resetRandomNumber();
         setBackgroundColor(UIManager.getColor("Panel.background"));
         numberOfTries.setText("Number of tries left: " + guess);
         comment.setText("Guess the number please");
@@ -108,7 +109,7 @@ public class GuessNumber extends JFrame implements ActionListener {
         int Difference = 0;
         if (guess <= 0) {
             setBackgroundColor(Color.red);
-            JOptionPane.showMessageDialog(null, "Sorry you lost the game", "You Lose !!!!",
+            JOptionPane.showMessageDialog(null, "Sorry you lost the game. The randomNumber was " + randomNumber, "You Lose !!!!",
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -153,7 +154,7 @@ public class GuessNumber extends JFrame implements ActionListener {
             comment.setText("Click Reset Button to reset the game");
             timer.stop();
             setBackgroundColor(Color.red);
-            JOptionPane.showMessageDialog(null, "Sorry you lost the game", "You Lose !!!!",
+            JOptionPane.showMessageDialog(null, "Sorry you lost the game. The randomNumber was " + randomNumber, "You Lose !!!!",
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
